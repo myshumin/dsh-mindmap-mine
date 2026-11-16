@@ -1,0 +1,5 @@
+# Shipped bundle patch — applied automatically when this package joins a
+# dsh profile's bundle layers (see `dsh.bundle.patch` in package.json).
+- insert:
+    - id: dsh-mindmap-mine
+      name: dsh-mindmap-mine

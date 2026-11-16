@@ -1,0 +1,58 @@
+{
+  "name": "dsh-mindmap-mine",
+  "version": "0.7.0",
+  "private": false,
+  "license": "MIT",
+  "author": "Schumin",
+  "description": "DSH 插件（自用魔改版）：会话级实时思维导图。agent 与用户在同一个树上双向编辑，画布基于 mind-elixir，入口在顶部会话工具栏与左侧边栏。",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "dsh-client-plugin",
+    "mindmap",
+    "mind-elixir"
+  ],
+  "files": [
+    "lib",
+    "dsh.bundle.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": {
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "default": "./lib/client.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dsh": {
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-store",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-connection"
+      ]
+    },
+    "bundle": {
+      "patch": "./dsh.bundle.patch.yml"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/myshumin/dsh-mindmap-mine.git"
+  },
+  "homepage": "https://github.com/myshumin/dsh-mindmap-mine#readme",
+  "bugs": {
+    "url": "https://github.com/myshumin/dsh-mindmap-mine/issues"
+  }
+}
