@@ -50,7 +50,7 @@ Object.values(state.byId).find((row) => (row.retainedBy.mainView ?? 0) > 0)?.id
   mode 存 `localStorage["dsh.mindmap-mine.theme"]`。
 - 初始化与每次 refresh 都不再 `scaleFit()`，改 `toCenter()`：打开就是 100%，agent 更新也不动用户缩放。
 
-**⑧ 点节点 → 引用进输入框（本仓库新增）**
+**⑧ 引用节点进输入框（本仓库新增）**
 - 走**原生 reference chip**，不是纯文本：输入框里只显示节点名（蓝色 tag + 图标），
   鼠标悬停/发送时才带出完整路径。
   - 插入接口不在 `InputActions` 里（那里只有 `insertQuote`/`insertText`…），真正的 chip 是
@@ -61,7 +61,9 @@ Object.values(state.byId).find((row) => (row.retainedBy.mainView ?? 0) > 0)?.id
   - 本次用 `label = 节点名`、`appearance = "file"`（蓝色带图标）、
     `clipboardText = 【导图节点】<topic>（路径：root › … › topic）` —— 于是「看到的是名字，发出去的是带路径的那行」。
 - 降级链：reference chip 失败 → `insertText` 插纯文本 → 仍失败则复制到剪贴板 + 画布内提示。
-- 触发条件：单击且位移 ≤6px、≤800ms；同一节点 900ms 内只插一次；空格平移/正在编辑节点/拖拽不触发。
+- **触发方式（0.7.1 起）**：选中节点后按 `C` 键；或在节点上右键 →「加入对话框」。
+  单纯点击节点**不再插入**（之前单击即插入，误操作太多）。同一节点 900ms 内只插一次；
+  正在编辑节点（`#input-box` 打开）或按着修饰键时不触发。
 - 注意点击目标必须是 `.me-tpc`（class，不是自定义标签名；内核里是 `<div class="me-tpc">`）。
 
 **⑨ XMind 配色 / 中文右键菜单 / 空格进入编辑（本仓库新增）**
@@ -73,6 +75,8 @@ Object.values(state.byId).find((row) => (row.retainedBy.mainView ?? 0) > 0)?.id
 - **右键菜单中文化**：构造时 `contextMenu: { focus, link, locale }`，`locale` 走
   `ZH_MENU` / `EN_MENU`（按 `navigator.language` 是否 zh 选择），同时把 `newTopicName`
   设为「新节点」/「New Node」。MindElixir 的菜单项语言是整对象覆盖，必须给全 12 个 key。
+- **主题按钮位置**：挂在缩放条 `.mind-elixir-toolbar.rb` 的**最左**（`insertBefore(bar.firstChild)`），
+  后面才是全屏 / 定位 / − / +。
 - **空格编辑**：焦点在画布（或刚点过节点、焦点落 body）时按空格 →
   `mind.selectNode(nodeEl, false)` + `mind.editTopic(nodeEl)`，内核会建 `#input-box`
   （`contenteditable="plaintext-only"`）并全选文字，直接打字即替换。
