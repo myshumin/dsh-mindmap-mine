@@ -1,10 +1,10 @@
 {
   "name": "dsh-mindmap-mine",
-  "version": "0.7.5",
+  "version": "0.11.0",
   "private": false,
   "license": "MIT",
   "author": "Schumin",
-  "description": "DSH 插件（自用魔改版）：会话级实时思维导图。agent 与用户在同一个树上双向编辑，画布基于 mind-elixir，入口在顶部会话工具栏与左侧边栏。",
+  "description": "DSH 插件（自用魔改版）：工作区级实时思维导图，作为 DSH 右侧栏标签页运行 —— 图落盘到工作区 .dsh/mindmaps/，跨会话共享，可一键导出需求文档；agent 与用户在同一个树上双向编辑，画布基于 mind-elixir。",
   "keywords": [
     "dsh",
     "dsh-plugin",
@@ -14,6 +14,7 @@
   ],
   "files": [
     "lib",
+    "tools",
     "dsh.bundle.patch.yml",
     "README.md",
     "LICENSE"
@@ -40,7 +41,9 @@
         "@deepseek-ai/dsh-client-store",
         "@deepseek-ai/dsh-client-ui-sidebar",
         "@deepseek-ai/dsh-client-ui-layout",
-        "@deepseek-ai/dsh-client-connection"
+        "@deepseek-ai/dsh-client-connection",
+        "@deepseek-ai/dsh-client-ui-sidebar-right",
+        "@deepseek-ai/dsh-client-ui-session"
       ]
     },
     "bundle": {
