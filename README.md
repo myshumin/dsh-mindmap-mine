@@ -100,6 +100,25 @@ Object.values(state.byId).find((row) => (row.retainedBy.mainView ?? 0) > 0)?.id
   `THEME_MODE_KEY`；改调色板只动 `DARK_CSS_OVERRIDES` 里那几个 CSS 变量即可
   （`--bgcolor` 画布底色、`--main-bgcolor` 节点底色、`--root-bgcolor` 根节点、`--color` 文字、`--selected` 选中描边）。
 
+**⑩ 节点标注（note，本仓库新增）**
+
+长解释不塞进节点正文，单独挂在节点上：
+
+- 右键节点 → **标注**，弹窗里写（Esc 取消，⌘/Ctrl+Enter 保存）。
+- 有标注的节点，正文右侧出现一个小文档图标；**单击**看内容（浮层，双击正文也能进编辑），**双击**图标直接改。
+- 数据落在该节点的 `note` 字段（`node.note`），随树一起同步：宿主 `repairNode` 与客户端
+  `sanitizeNode` 都是展开拷贝，未知字段保留，`getDataString` 会把 nodeObj 上的自定义字段一起序列化。
+- 因此 `mindmap_live_get` 读到的树里带 `note`，agent 改树时也必须原样带回来（工具描述里已写明规则 5）。
+- 选中节点按 `C`（或右键「加入对话框」）引用时，插进输入框的文本是：
+
+  ```
+  【导图节点】<节点>
+  （路径：根 › … › <节点>）
+  标注：<note 原文>
+  ```
+
+  所以把节点拖进对话，AI 同时拿到位置和完整标注。
+
 ## 安装 / 更新
 
 源码在本目录，运行时装在 profile 里：
